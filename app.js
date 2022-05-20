@@ -18,11 +18,19 @@ require("./config")(app);
 
 // 👇 Start handling routes here
 // Contrary to the views version, all routes are controlled from the routes/index.js
-const allRoutes = require("./routes/index.routes");
-app.use("/api", isAuthenticated, allRoutes);
 
 const authRouter = require("./routes/auth.routes.js");          //  <== IMPORT
 app.use("/auth", authRouter);   
+
+const planetRouter = require("./routes/planet.routes");          //  <== planets
+app.use("/api", planetRouter);
+
+const stayRouter = require("./routes/stays.routes");
+app.use("/api", isAuthenticated, stayRouter);                   // StayRoute
+
+const allRoutes = require("./routes/index.routes");
+app.use("/api", isAuthenticated, allRoutes);
+
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
